@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shurbaji</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+
+        table {
+            width: 80%;  
+            margin: 20px auto; 
+            border-collapse: collapse; 
+        }
+
+        th, td {
+            padding: 10px; 
+            text-align: left; 
+            border: 1px solid #ccc; 
+        }
+
+        th {
+            background-color: #f4f4f4; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Searchable Table</h1>
+
+    <label for="searchInput">Search: </label>
+    <input type="text" id="searchInput" placeholder="Enter search text">
+
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>City</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ahmad</td>
+                <td>28</td>
+                <td>jarash</td>
+            </tr>
+            <tr>
+                <td>mohammad</td>
+                <td>30</td>
+                <td>amman</td>
+            </tr>
+            <tr>
+                <td>fares</td>
+                <td>22</td>
+                <td>amman</td>
+            </tr>
+            <tr>
+                <td>saad</td>
+                <td>27</td>
+                <td>amman</td>
+            </tr>
+            <tr>
+                <td>ali</td>
+                <td>35</td>
+                <td>amman</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function highlightText(text, cell) {
+            const cellText = cell.innerText;
+            const index = cellText.toLowerCase().indexOf(text.toLowerCase());
+            if (index !== -1) {
+                const before = cellText.slice(0, index);
+                const match = cellText.slice(index, index + text.length);
+                const after = cellText.slice(index + text.length);
+
+                cell.innerHTML = `${before}<span class="highlight">${match}</span>${after}`;
+            }
+        }
+
+        function filterTable() {
+            const searchText = document.getElementById("searchInput").value.toLowerCase();
+            const table = document.getElementById("dataTable");
+            const rows = table.getElementsByTagName("tr");
+            
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName("td");
+                let matchFound = false;
+                
+                for (let j = 0; j < cells.length; j++) {
+                    cells[j].innerHTML = cells[j].innerText; 
+                }
+
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].innerText.toLowerCase().includes(searchText)) {
+                        matchFound = true;
+                        highlightText(searchText, cells[j]); 
+                    }
+                }
+
+                rows[i].style.display = matchFound ? "" : "none";
+            }
+        }
+
+        document.getElementById("searchInput").addEventListener("input", filterTable);
+    </script>
+</body>
+</html>

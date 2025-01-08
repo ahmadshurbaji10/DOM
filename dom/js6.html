@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shurbaji</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+        }
+        .container {
+            max-width: 300px;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <label for="celsius">Celsius: </label>
+        <input type="text" id="celsius" placeholder="Enter Celsius">
+        <br>
+        <label for="fahrenheit">Fahrenheit: </label>
+        <input type="text" id="fahrenheit" placeholder="Enter Fahrenheit">
+        <br>
+        <button id="convertBtn">Convert</button>
+        <p id="error" style="color: red;"></p> 
+    </div>
+
+    <script>
+        const celsiusInput = document.getElementById('celsius');
+        const fahrenheitInput = document.getElementById('fahrenheit');
+        const convertBtn = document.getElementById('convertBtn');
+        const errorMessage = document.getElementById('error');
+
+        function celsiusToFahrenheit(celsius) {
+            return (celsius * 9/5) + 32;
+        }
+
+        function fahrenheitToCelsius(fahrenheit) {
+            return (fahrenheit - 32) * 5/9;
+        }
+
+        convertBtn.addEventListener('click', function() {
+            errorMessage.textContent = ""; 
+
+            const celsiusValue = parseFloat(celsiusInput.value);
+            const fahrenheitValue = parseFloat(fahrenheitInput.value);
+        
+            if (!isNaN(celsiusValue) && celsiusInput.value.trim() !== "") {
+                fahrenheitInput.value = celsiusToFahrenheit(celsiusValue).toFixed(2);
+            } else if (!isNaN(fahrenheitValue) && fahrenheitInput.value.trim() !== "") {
+                celsiusInput.value = fahrenheitToCelsius(fahrenheitValue).toFixed(2);
+            } else {
+                errorMessage.textContent = "Please enter a valid number in one of the fields.";
+            }
+        });
+    </script>
+</body>
+</html>
